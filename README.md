@@ -1,6 +1,6 @@
 # `protobuf-codec`
 
-> Protocol Buffers wire encoding/decoding
+> Minimal Protocol Buffers wire encoding/decoding
 
 ## Example
 

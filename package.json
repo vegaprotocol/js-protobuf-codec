@@ -1,6 +1,6 @@
 {
   "name": "protobuf-codec",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Minimal Protocol Buffers wire encoding/decoding",
   "main": "index.mjs",
   "scripts": {

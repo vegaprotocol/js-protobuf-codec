@@ -59,6 +59,34 @@ for (const [fieldNumber, { data }] of reader(buf)) {
 
 ### `const iter = reader(buf, [byteOffset], [byteLength])`
 
+```js
+const msg = new Uint8Array([ /* ... */ ])
+
+for (const [fieldNumber, field] of reader(msg)) {
+  const {
+    tagByteOffset,
+    tagByteLength,
+    // The tag is essentially `fieldNumber << 3 | wireType`
+    fieldNumber,
+    wireType,
+    // Total length of the data, eg. including a length prefix or extra bytes for varints
+    dataByteLength,
+    // The actually value of the field decoded based on the wireType:
+    //
+    // - varint: bigint
+    // - fixed32: Uint8Array subarray
+    // - fixed64: Uint8Array subarray
+    // - bytes: Uint8Array subarray
+    //
+    // The fixed size integers are represented as Uint8Arrays since there's no easy way
+    // to cast a integer to a double/float without using DataView's, which in turn expect
+    // a TypedArray
+    data
+  } = field
+  // ...
+}
+```
+
 
 
 ## Install

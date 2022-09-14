@@ -65,7 +65,7 @@ export const int64 = {
 export const sint64 = {
   encode (int, buf = alloc(this, int), byteOffset = 0) {
     const bigint = BigInt(int)
-    varint.encode(BigInt.asIntN(64, (bigint << 1n) ^ (bigint >> 63)), buf, byteOffset)
+    varint.encode(BigInt.asIntN(64, (bigint << 1n) ^ (bigint >> 63n)), buf, byteOffset)
     this.encode.bytes = varint.encode.bytes
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
   },
@@ -101,7 +101,7 @@ export const int32 = {
 export const sint32 = {
   encode (int, buf = alloc(this, int), byteOffset = 0) {
     const bigint = BigInt(int)
-    varint.encode(BigInt.asIntN(32, (bigint << 1n) ^ (bigint >> 31)), buf, byteOffset)
+    varint.encode(BigInt.asIntN(32, (bigint << 1n) ^ (bigint >> 31n)), buf, byteOffset)
     this.encode.bytes = varint.encode.bytes
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
   },

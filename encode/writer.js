@@ -1,4 +1,4 @@
-import { varint, tag, bytes, uint64, uint32, wireTypes } from './wire-types.mjs'
+import { varint, tag, bytes, uint64, uint32, wireTypes } from './wire-types.js'
 
 const PAGE_SIZE = 256
 

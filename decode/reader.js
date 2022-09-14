@@ -1,4 +1,4 @@
-import { decoders, tag } from './wire-types.mjs'
+import { decoders, tag } from './wire-types.js'
 import assert from 'nanoassert'
 
 export default function* reader(

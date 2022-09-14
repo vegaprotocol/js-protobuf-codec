@@ -1,1 +1,1 @@
-export * from './wire-types.mjs'
+export * from './wire-types.js'

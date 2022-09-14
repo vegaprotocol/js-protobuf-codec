@@ -1,5 +1,3 @@
-
-
 export const tag = {
   encode (
     fieldNumber,

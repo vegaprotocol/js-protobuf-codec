@@ -1,4 +1,4 @@
-import Writer from "../encode/writer.mjs"
+import Writer from '../encode/writer.js'
 import test from 'tape'
 
 test('', (assert) => {

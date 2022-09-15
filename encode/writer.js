@@ -1,4 +1,4 @@
-import { varint, tag, bytes, uint64, uint32, wireTypes } from './wire-types.js'
+import { varint, tag, uint64, bytes, uint32, wireTypes } from './wire-types.js'
 
 const PAGE_SIZE = 256
 
@@ -15,7 +15,7 @@ export default class Writer {
   /**
    * @returns {number} Number of buffers in the list of disjoint memory segments
    */
-  get pages() {
+  get pages () {
     return this.buf.length
   }
 
@@ -26,7 +26,7 @@ export default class Writer {
    * @param {number} bytes Number of bytes to allocate and reserve for immediate consumption
    * @returns {Uint8Array}
    */
-  alloc(bytes) {
+  alloc (bytes) {
     const tail = this.buf.at(-1)
     if (tail.byteLength - this.offset >= bytes) {
       this.offset += bytes
@@ -44,11 +44,10 @@ export default class Writer {
    * Trim the tail of the internal memory segments in case the last segment was overallocated
    * @private
    */
-  _trim() {
+  _trim () {
     if (this.offset === 0) {
       this.buf.pop() // remove the item that is unused
-    }
-    else this.buf.push(this.buf.pop().subarray(0, this.offset))
+    } else this.buf.push(this.buf.pop().subarray(0, this.offset))
   }
 
   /**
@@ -58,10 +57,10 @@ export default class Writer {
    * @param  {...Uint8Array} bufs Memory segments to append to the internal write buffer
    * @returns {Uint8Array} The last memory segment appended
    */
-  append(...bufs) {
+  append (...bufs) {
     this._trim()
     this.buf.push(...bufs)
-    let tail = this.buf.at(-1)
+    const tail = this.buf.at(-1)
     this.offset = tail.byteLength
 
     return tail
@@ -74,7 +73,7 @@ export default class Writer {
    * @param {{ encode(value: T, buf?: Uint8Array, byteOffset: number = 0): Uint8Array, encodingLength<T>(value: T): number}} codec
    * @returns
    */
-  varint(fieldNumber, value, codec = varint) {
+  varint (fieldNumber, value, codec = varint) {
     if (!value) return
 
     const buf = this.alloc(
@@ -86,7 +85,7 @@ export default class Writer {
     codec.encode(value, buf, tag.encode.bytes)
   }
 
-  bytes(fieldNumber, value, codec = bytes) {
+  bytes (fieldNumber, value, codec = bytes) {
     if (!value) return
 
     const buf = this.alloc(
@@ -98,7 +97,7 @@ export default class Writer {
     codec.encode(value, buf, tag.encode.bytes)
   }
 
-  fixed64(fieldNumber, value, codec = uint64) {
+  fixed64 (fieldNumber, value, codec = uint64) {
     if (!value) return
     const buf = this.alloc(
       tag.encodingLength(fieldNumber, wireTypes.FIXED64) +
@@ -109,7 +108,7 @@ export default class Writer {
     codec.encode(value, buf, tag.encode.bytes)
   }
 
-  fixed32(fieldNumber, value, codec = uint32) {
+  fixed32 (fieldNumber, value, codec = uint32) {
     if (!value) return
     const buf = this.alloc(
       tag.encodingLength(fieldNumber, wireTypes.FIXED32) +
@@ -140,9 +139,9 @@ export default class Writer {
    * @param {number} byteOffset offset into `buf` that the encoding is written at
    * @returns {Uint8Array} `buf`
    */
-  concat(buf, byteOffset = 0) {
+  concat (buf, byteOffset = 0) {
     this._trim()
-    let size = this.encodingLength()
+    const size = this.encodingLength()
 
     if (buf == null) buf = new Uint8Array(size)
 
@@ -154,8 +153,4 @@ export default class Writer {
 
     return buf
   }
-}
-
-function _view (bytes) {
-  return new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
 }

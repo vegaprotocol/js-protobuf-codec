@@ -22,7 +22,7 @@ export const tag = {
 }
 
 export const string = {
-  encode(str, buf = alloc(this, str), byteOffset = 0) {
+  encode (str, buf = alloc(this, str), byteOffset = 0) {
     assert(typeof str === 'string')
     const src = utf8.decode(str)
     bytes.encode(src, buf, byteOffset)
@@ -146,7 +146,7 @@ function _view (bytes) {
 }
 
 export const enumerable = {
-  encode(en, buf = alloc(this, en), byteOffset = 0) {
+  encode (en, buf = alloc(this, en), byteOffset = 0) {
     assert(en <= enumerable.MAX_VALUE, 'enum value exceeds MAX_VALUE')
     varint.encode(en, buf, byteOffset)
     this.encode.bytes = varint.encode.bytes

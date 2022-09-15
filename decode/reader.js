@@ -1,10 +1,11 @@
 import { decoders, tag } from './wire-types.js'
 import assert from 'nanoassert'
 
-export default function* reader(
+export default function * reader (
   buf,
   byteOffset = 0,
-  byteLength = buf.byteLength) {
+  byteLength = buf.byteLength
+) {
   let o = byteOffset
   const end = byteOffset + byteLength
   assert(end <= buf.byteLength)

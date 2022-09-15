@@ -8,7 +8,8 @@
     "./*.js": "./*.js"
   },
   "scripts": {
-    "test": "tape 'test/**/*.mjs'"
+    "test": "tape 'test/**/*.mjs'",
+    "posttest": "standard ."
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
   },
   "homepage": "https://github.com/vegaprotocol/js-protobuf-codec#readme",
   "devDependencies": {
+    "standard": "^17.0.0",
     "tape": "^5.5.3"
   },
   "dependencies": {

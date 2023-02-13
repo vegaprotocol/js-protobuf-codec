@@ -5,8 +5,8 @@ import * as decodeWire from '../decode/wire-types.js'
 import * as encode from '../encode/types.js'
 
 test('enumerable', assert => {
-  ;[0, -1, 1, 2 ** 31 - 1].forEach(n => {
-    assert.equal(decode.enumerable(decodeWire.varint(encode.enumerable.encode(n))), n)
+  ;[0, -1, 1, 2 ** 31 - 1, encode.enumerable.MIN_VALUE, encode.enumerable.MAX_VALUE].forEach(n => {
+    assert.looseEqual(decode.enumerable(decodeWire.varint(encode.enumerable.encode(n))), n)
   })
   assert.end()
 })

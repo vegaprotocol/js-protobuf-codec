@@ -94,6 +94,7 @@ export const tag = {
 
     return (9 * (32 - Math.clz32(Number(fieldNumber) << 3)) + 64) / 64 | 0
   },
+  MIN_VALUE: 1n,
   MAX_VALUE: (1n << 29n) - 1n
 }
 
@@ -113,27 +114,39 @@ export const string = {
 }
 
 export const uint64 = {
-  encode (int, buf = alloc(this, int), byteOffset = 0) {
-    const bigint = BigInt(int)
-    varint.encode(BigInt.asUintN(64, bigint), buf, byteOffset)
+  encode (uint, buf = alloc(this, uint), byteOffset = 0) {
+    assert(uint >= this.MIN_VALUE, 'uint exceeds MIN_VALUE')
+    assert(uint <= this.MAX_VALUE, 'uint exceeds MAX_VALUE')
+    const biguint = BigInt(uint)
+    varint.encode(BigInt.asUintN(64, biguint), buf, byteOffset)
     this.encode.bytes = varint.encode.bytes
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
   },
-  encodingLength (int) {
-    return varint.encodingLength(int)
-  }
+  encodingLength (uint) {
+    assert(uint >= this.MIN_VALUE, 'uint exceeds MIN_VALUE')
+    assert(uint <= this.MAX_VALUE, 'uint exceeds MAX_VALUE')
+    return varint.encodingLength(uint)
+  },
+  MIN_VALUE: varint.MIN_VALUE,
+  MAX_VALUE: varint.MAX_VALUE
 }
 
 export const int64 = {
   encode (int, buf = alloc(this, int), byteOffset = 0) {
+    assert(int >= this.MIN_VALUE, 'int exceeds MIN_VALUE')
+    assert(int <= this.MAX_VALUE, 'int exceeds MAX_VALUE')
     const bigint = BigInt(int)
     varint.encode(BigInt.asIntN(64, bigint), buf, byteOffset)
     this.encode.bytes = varint.encode.bytes
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
   },
   encodingLength (int) {
+    assert(int >= this.MIN_VALUE, 'int exceeds MIN_VALUE')
+    assert(int <= this.MAX_VALUE, 'int exceeds MAX_VALUE')
     return varint.encodingLength(int)
-  }
+  },
+  MIN_VALUE: -(1n << 63n),
+  MAX_VALUE: (1n << 63n) - 1n
 }
 
 export const sint64 = {
@@ -156,27 +169,39 @@ export const sint64 = {
 }
 
 export const uint32 = {
-  encode (int, buf = alloc(this, int), byteOffset = 0) {
-    const bigint = BigInt(int)
+  encode (uint, buf = alloc(this, uint), byteOffset = 0) {
+    assert(uint >= this.MIN_VALUE, 'uint exceeds MIN_VALUE')
+    assert(uint <= this.MAX_VALUE, 'uint exceeds MAX_VALUE')
+    const bigint = BigInt(uint)
     varint.encode(BigInt.asUintN(32, bigint), buf, byteOffset)
     this.encode.bytes = varint.encode.bytes
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
   },
-  encodingLength (int) {
-    return varint.encodingLength(int)
-  }
+  encodingLength (uint) {
+    assert(uint >= this.MIN_VALUE, 'uint exceeds MIN_VALUE')
+    assert(uint <= this.MAX_VALUE, 'uint exceeds MAX_VALUE')
+    return varint.encodingLength(uint)
+  },
+  MIN_VALUE: 0,
+  MAX_VALUE: (1n << 32n) - 1n
 }
 
 export const int32 = {
   encode (int, buf = alloc(this, int), byteOffset = 0) {
+    assert(int >= this.MIN_VALUE, 'int exceeds MIN_VALUE')
+    assert(int <= this.MAX_VALUE, 'int exceeds MAX_VALUE')
     const bigint = BigInt(int)
     varint.encode(BigInt.asIntN(32, bigint), buf, byteOffset)
     this.encode.bytes = varint.encode.bytes
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
   },
   encodingLength (int) {
+    assert(int >= this.MIN_VALUE, 'int exceeds MIN_VALUE')
+    assert(int <= this.MAX_VALUE, 'int exceeds MAX_VALUE')
     return varint.encodingLength(int)
-  }
+  },
+  MIN_VALUE: -(1n << 31n),
+  MAX_VALUE: (1n << 31n) - 1n
 }
 
 export const sint32 = {

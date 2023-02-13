@@ -23,11 +23,11 @@ export function int32 (bigint) {
 }
 
 export function sint64 (bigint) {
-  return ((bigint >> 1n) ^ (bigint) << 63n) >> 63n
+  return ((bigint >> 1n) ^ (-1n * (bigint & 1n)))
 }
 
 export function sint32 (bigint) {
-  return Number(((bigint >> 1n) ^ (bigint) << 31n) >> 31n)
+  return Number((bigint >> 1n) ^ (-1n * (bigint & 1n)))
 }
 
 export function bool (bigint) {

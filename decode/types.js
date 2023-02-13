@@ -34,6 +34,10 @@ export function bool (bigint) {
   return bigint !== 0n
 }
 
+export function enumerable (uint) {
+  return Number(uint) | 0 // trick to cast uint to int
+}
+
 export function bytes (bytes) {
   return bytes
 }

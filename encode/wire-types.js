@@ -237,15 +237,19 @@ function _view (bytes) {
 
 export const enumerable = {
   encode (en, buf = alloc(this, en), byteOffset = 0) {
+    assert(en >= enumerable.MIN_VALUE, 'enum value exceeds MIN_VALUE')
     assert(en <= enumerable.MAX_VALUE, 'enum value exceeds MAX_VALUE')
+
+    en = en >>> 0 // cast to uint32 for varint encoding
     varint.encode(en, buf, byteOffset)
     this.encode.bytes = varint.encode.bytes
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
   },
   encodingLength (en) {
-    return varint.encodingLength(en)
+    return varint.encodingLength(en >>> 0)
   },
-  MAX_VALUE: (1n << 32n) - 1n
+  MIN_VALUE: -(1n << 31n),
+  MAX_VALUE: (1n << 31n) - 1n
 }
 
 const enc = new TextEncoder()

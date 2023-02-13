@@ -4,6 +4,13 @@ import * as decode from '../decode/types.js'
 import * as decodeWire from '../decode/wire-types.js'
 import * as encode from '../encode/types.js'
 
+test('enumerable', assert => {
+  ;[0, -1, 1, 2 ** 31 - 1].forEach(n => {
+    assert.equal(decode.enumerable(decodeWire.varint(encode.enumerable.encode(n))), n)
+  })
+  assert.end()
+})
+
 test('sint32', assert => {
   // From protoscope
   const cases = [

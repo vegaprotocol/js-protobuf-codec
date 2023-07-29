@@ -1,7 +1,7 @@
-import { decoders, tag } from './wire-types.js'
-import assert from 'nanoassert'
+const assert = require('nanoassert')
+const { decoders, tag } = require('./wire-types.js')
 
-export default function * reader (
+module.exports = function * reader (
   buf,
   byteOffset = 0,
   byteLength = buf.byteLength

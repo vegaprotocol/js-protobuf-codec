@@ -1,18 +1,18 @@
-import assert from 'nanoassert'
+const assert = require('nanoassert')
 
 /**
  * Wire type decoders mapping the `type` integer to the basic decoder.
  * Groups are not supported, and the higher-level types are done in a 2nd pass
  * @type {Object}
  */
-export const decoders = {
+const decoders = {
   0: varint,
   1: fixed64bit,
   2: bytes,
   5: fixed32bit
 }
 
-export function tag (buf, byteOffset = 0) {
+function tag (buf, byteOffset = 0) {
   const int = Number(varint(buf, byteOffset)) // Safe as protoc only allows fieldNumber up to int32 + 3 bits for wireType
   const wireType = int & 0b111
   const fieldNumber = int >> 3
@@ -22,7 +22,7 @@ export function tag (buf, byteOffset = 0) {
   return { wireType, fieldNumber }
 }
 
-export function varint (buf, byteOffset = 0) {
+function varint (buf, byteOffset = 0) {
   let o = byteOffset
   let acc = 0n
   let shift = 0n
@@ -39,7 +39,7 @@ export function varint (buf, byteOffset = 0) {
   return acc
 }
 
-export function bytes (buf, byteOffset = 0) {
+function bytes (buf, byteOffset = 0) {
   const len = varint(buf, byteOffset)
 
   assert(buf.byteLength - byteOffset - varint.bytes >= len, 'Malformed bytes')
@@ -49,14 +49,23 @@ export function bytes (buf, byteOffset = 0) {
   return b
 }
 
-export function fixed64bit (buf, byteOffset = 0) {
+function fixed64bit (buf, byteOffset = 0) {
   assert(buf.byteLength - byteOffset >= 8, 'Malformed 64-bit')
   fixed64bit.bytes = 8
   return buf.subarray(byteOffset, byteOffset + 8)
 }
 
-export function fixed32bit (buf, byteOffset = 0) {
+function fixed32bit (buf, byteOffset = 0) {
   assert(buf.byteLength - byteOffset >= 4, 'Malformed 64-bit')
   fixed32bit.bytes = 4
   return buf.subarray(byteOffset, byteOffset + 4)
+}
+
+module.exports = {
+  decoders,
+  tag,
+  varint,
+  bytes,
+  fixed64bit,
+  fixed32bit
 }

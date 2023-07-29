@@ -1,5 +1,5 @@
-import Writer from '../encode/writer.js'
-import test from 'tape'
+const Writer = require('../encode/writer.js')
+const test = require('tape')
 
 test('', (assert) => {
   assert.equal(new Writer().concat().byteLength, 0)

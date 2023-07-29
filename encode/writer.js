@@ -1,8 +1,8 @@
-import { varint, tag, uint64, bytes, uint32, wireTypes } from './wire-types.js'
+const { varint, tag, uint64, bytes, uint32, wireTypes } = require('./wire-types.js')
 
 const PAGE_SIZE = 256
 
-export default class Writer {
+module.exports = class Writer {
   /**
    *
    * @param {number} [prealloc=256] Number of bytes to preallocate in the internal write buffer

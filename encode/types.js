@@ -1,1 +1,1 @@
-export * from './wire-types.js'
+module.exports = require('./wire-types.js')

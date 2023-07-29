@@ -1,8 +1,8 @@
-import test from 'tape'
+const test = require('tape')
 
-import * as decode from '../decode/types.js'
-import * as decodeWire from '../decode/wire-types.js'
-import * as encode from '../encode/types.js'
+const decode = require('../decode/types.js')
+const decodeWire = require('../decode/wire-types.js')
+const encode = require('../encode/types.js')
 
 test('enumerable', assert => {
   ;[0, -1, 1, 2 ** 31 - 1, encode.enumerable.MIN_VALUE, encode.enumerable.MAX_VALUE].forEach(n => {

@@ -73,3 +73,32 @@ test('sint64', assert => {
   })
   assert.end()
 })
+
+test('int64 indentity', assert => {
+  const cases = [
+    encode.int64.MIN_VALUE,
+    encode.int64.MAX_VALUE,
+    0n,
+    1n,
+    -1n,
+    2n,
+    -2n,
+    63n,
+    -64n,
+    64n,
+    -65n,
+    2n ** 31n - 1n,
+    -(2n ** 31n),
+    2n ** 31n,
+    -(2n ** 31n - 1n),
+    // Two Number values
+    0,
+    1
+  ]
+
+  cases.forEach(n => {
+    assert.equal(decode.int64(decodeWire.varint(encode.int64.encode(n))), BigInt(n))
+  })
+
+  assert.end()
+})

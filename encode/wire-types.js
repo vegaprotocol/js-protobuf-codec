@@ -55,7 +55,7 @@ const varint = {
     const high = Number(BigInt(int) >> 32n)
     return (9 * (32 - Math.clz32(high) + 32) + 64) / 64 | 0
   },
-  MIN_VALUE: 0n,
+  MIN_VALUE: -(1n << 63n),
   MAX_VALUE: (1n << 64n) - 1n
 }
 

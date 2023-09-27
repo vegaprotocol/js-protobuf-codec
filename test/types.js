@@ -36,9 +36,9 @@ test('sint32', assert => {
     assert.equal(decode.sint32(varint), expected, 'sint32 decode')
   })
 
-  ;[0n, -1n, 1n, encode.sint32.MAX_VALUE, encode.sint32.MIN_VALUE].forEach(n => {
-    assert.looseEqual(decode.sint32(decodeWire.varint(encode.sint32.encode(n))), n, 'sint32 identity')
-  })
+    ;[0n, -1n, 1n, encode.sint32.MAX_VALUE, encode.sint32.MIN_VALUE].forEach(n => {
+      assert.looseEqual(decode.sint32(decodeWire.varint(encode.sint32.encode(n))), n, 'sint32 identity')
+    })
   assert.end()
 })
 
@@ -68,9 +68,9 @@ test('sint64', assert => {
     assert.equal(decode.sint64(varint), BigInt(expected), 'sint64 decode')
   })
 
-  ;[0n, -1n, 1n, encode.sint64.MAX_VALUE, encode.sint64.MIN_VALUE].forEach(n => {
-    assert.equal(decode.sint64(decodeWire.varint(encode.sint64.encode(n))), n, 'sint64 identity')
-  })
+    ;[0n, -1n, 1n, encode.sint64.MAX_VALUE, encode.sint64.MIN_VALUE].forEach(n => {
+      assert.equal(decode.sint64(decodeWire.varint(encode.sint64.encode(n))), n, 'sint64 identity')
+    })
   assert.end()
 })
 
@@ -98,6 +98,50 @@ test('int64 indentity', assert => {
 
   cases.forEach(n => {
     assert.equal(decode.int64(decodeWire.varint(encode.int64.encode(n))), BigInt(n))
+  })
+
+  assert.end()
+})
+
+test('double identity', assert => {
+  const cases = [
+    0,
+    Number.MIN_VALUE,
+    Number.MAX_VALUE,
+    Number.MIN_SAFE_INTEGER,
+    Number.MAX_SAFE_INTEGER,
+    Number.EPSILON,
+    Number.NEGATIVE_INFINITY,
+    Number.POSITIVE_INFINITY,
+    Number.NaN,
+    1,
+    1 / 3
+  ]
+
+  cases.forEach(n => {
+    assert.equal(decode.double(decodeWire.fixed64bit(encode.double.encode(n))), n)
+  })
+
+  assert.end()
+})
+
+test('double identity', assert => {
+  const cases = [
+    0,
+    Number.MIN_VALUE,
+    Number.MAX_VALUE,
+    Number.MIN_SAFE_INTEGER,
+    Number.MAX_SAFE_INTEGER,
+    Number.EPSILON,
+    Number.NEGATIVE_INFINITY,
+    Number.POSITIVE_INFINITY,
+    Number.NaN,
+    1,
+    1 / 3
+  ].map(n => Math.fround(n))
+
+  cases.forEach(n => {
+    assert.equal(decode.float(decodeWire.fixed32bit(encode.float.encode(n))), n)
   })
 
   assert.end()

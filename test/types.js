@@ -36,9 +36,9 @@ test('sint32', assert => {
     assert.equal(decode.sint32(varint), expected, 'sint32 decode')
   })
 
-    ;[0n, -1n, 1n, encode.sint32.MAX_VALUE, encode.sint32.MIN_VALUE].forEach(n => {
-      assert.looseEqual(decode.sint32(decodeWire.varint(encode.sint32.encode(n))), n, 'sint32 identity')
-    })
+  ;[0n, -1n, 1n, encode.sint32.MAX_VALUE, encode.sint32.MIN_VALUE].forEach(n => {
+    assert.looseEqual(decode.sint32(decodeWire.varint(encode.sint32.encode(n))), n, 'sint32 identity')
+  })
   assert.end()
 })
 
@@ -68,9 +68,9 @@ test('sint64', assert => {
     assert.equal(decode.sint64(varint), BigInt(expected), 'sint64 decode')
   })
 
-    ;[0n, -1n, 1n, encode.sint64.MAX_VALUE, encode.sint64.MIN_VALUE].forEach(n => {
-      assert.equal(decode.sint64(decodeWire.varint(encode.sint64.encode(n))), n, 'sint64 identity')
-    })
+  ;[0n, -1n, 1n, encode.sint64.MAX_VALUE, encode.sint64.MIN_VALUE].forEach(n => {
+    assert.equal(decode.sint64(decodeWire.varint(encode.sint64.encode(n))), n, 'sint64 identity')
+  })
   assert.end()
 })
 

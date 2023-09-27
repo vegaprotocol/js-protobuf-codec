@@ -84,6 +84,7 @@ const tag = {
     assert(fieldNumber > 0, 'fieldNumber must be greater than 0')
     assert(fieldNumber <= tag.MAX_VALUE, 'fieldNumber exceeds MAX_VALUE')
     const int = BigInt.asUintN(32, BigInt(fieldNumber)) << 3n | BigInt(wireType)
+    console.log(int)
     varint.encode(int, buf, byteOffset)
     this.encode.bytes = varint.encode.bytes
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
@@ -236,7 +237,7 @@ const bool = {
 
 const double = {
   encode (val, buf = alloc(this), byteOffset = 0) {
-    _view(buf).setFloat64(0, val, true)
+    _view(buf).setFloat64(byteOffset, val, true)
     this.encode.bytes = 8
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
   },
@@ -247,7 +248,7 @@ const double = {
 
 const float = {
   encode (val, buf = alloc(this), byteOffset = 0) {
-    _view(buf).setFloat32(0, val, true)
+    _view(buf).setFloat32(byteOffset, val, true)
     this.encode.bytes = 4
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)
   },

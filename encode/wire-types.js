@@ -84,7 +84,6 @@ const tag = {
     assert(fieldNumber > 0, 'fieldNumber must be greater than 0')
     assert(fieldNumber <= tag.MAX_VALUE, 'fieldNumber exceeds MAX_VALUE')
     const int = BigInt.asUintN(32, BigInt(fieldNumber)) << 3n | BigInt(wireType)
-    console.log(int)
     varint.encode(int, buf, byteOffset)
     this.encode.bytes = varint.encode.bytes
     return buf.subarray(byteOffset, byteOffset + this.encode.bytes)

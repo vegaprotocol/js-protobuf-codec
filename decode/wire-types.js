@@ -14,7 +14,6 @@ const decoders = {
 
 function tag (buf, byteOffset = 0) {
   const int = Number(varint(buf, byteOffset)) // Safe as protoc only allows fieldNumber up to int32 + 3 bits for wireType
-  console.log(int)
   const wireType = int & 0b111
   const fieldNumber = int >> 3
 
